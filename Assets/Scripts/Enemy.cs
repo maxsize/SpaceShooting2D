@@ -4,6 +4,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour, IExplodable
 {
     public SimpleEnemyData data;
+    public GameObject explosion;
 
     float _health;
     
@@ -35,11 +36,12 @@ public class Enemy : MonoBehaviour, IExplodable
     private void Die()
     {
         Explode();
+        gameObject.SetActive(false);
         Destroy(gameObject);
     }
 
     private void Explode()
     {
-        //instantiate explode animation and play it.
+        GameObject anim = Instantiate(explosion, transform.position, Quaternion.identity);
     }
 }

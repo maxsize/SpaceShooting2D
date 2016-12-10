@@ -54,11 +54,14 @@
      <Compile Include="Assets\Scripts\ArrayUtils.cs" />
      <Compile Include="Assets\Scripts\BulletEmitter.cs" />
      <Compile Include="Assets\Scripts\CraftSpawner.cs" />
+     <Compile Include="Assets\Scripts\Destroyer.cs" />
      <Compile Include="Assets\Scripts\Enemy.cs" />
+     <Compile Include="Assets\Scripts\GlobalTimer.cs" />
      <Compile Include="Assets\Scripts\IExplodable.cs" />
      <Compile Include="Assets\Scripts\MyBullet.cs" />
      <Compile Include="Assets\Scripts\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\PlaneController.cs" />
+     <Compile Include="Assets\Scripts\Scheduler.cs" />
      <Compile Include="Assets\Scripts\Spawner.cs" />
      <Compile Include="Assets\Scripts\TrackController.cs" />
      <Compile Include="Assets\Scripts\Waypoint.cs" />
