@@ -1,16 +1,34 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
-public class PlaneController : MonoBehaviour {
+public class PlaneController : MonoBehaviour, IExplodable {
 
-	public float max_rotate = 20f;
-	public float x_speed = 5f;
-	public float y_speed = 5f;
+	public PlayerData playerData;
 	Transform plane;
+	float health;
 
-	// Use this for initialization
-	void Start () {
+    float IExplodable.Health
+    {
+        get
+        {
+			return health;
+        }
+    }
+
+    void IExplodable.DealDamage(float damage)
+    {
+		health -= damage;
+		if (health < 0)
+		{
+			Destroy(gameObject);
+		}
+    }
+
+    // Use this for initialization
+    void Start () {
 		plane = transform;
+		health = playerData.Health;
 	}
 	
 	// Update is called once per frame
@@ -22,12 +40,12 @@ public class PlaneController : MonoBehaviour {
 		if (axisX != 0)
 		{
 			Vector3 dir = new Vector3(0, -axisX, 0);
-			rotate = Quaternion.AngleAxis(max_rotate, dir);
-			move.x = Input.GetAxis("Horizontal") * x_speed;
+			rotate = Quaternion.AngleAxis(playerData.Max_Rotate, dir);
+			move.x = Input.GetAxis("Horizontal") * playerData.X_Speed;
 		}
 		if (axisY != 0)
 		{
-			move.y = Input.GetAxis("Vertical") * y_speed;
+			move.y = Input.GetAxis("Vertical") * playerData.Y_Speed;
 		}
 		Quaternion tempQua = Quaternion.Lerp(plane.rotation, rotate, Time.deltaTime * 5);
 		plane.rotation = tempQua;

@@ -42,6 +42,6 @@ public class Enemy : MonoBehaviour, IExplodable
 
     private void Explode()
     {
-        GameObject anim = Instantiate(explosion, transform.position, Quaternion.identity);
+        Instantiate(explosion, transform.position, Quaternion.identity);
     }
 }

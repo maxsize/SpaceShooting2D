@@ -24,6 +24,7 @@ public class Spawner : MonoBehaviour {
 		{
 			yield return new WaitForSeconds(SpawnInterval);
 			GameObject copy = Instantiate(Template, cachedPosition, cachedRotation) as GameObject;
+			copy.transform.parent = Template.transform.parent;
 			copy.SetActive(true);
 		}
 	}

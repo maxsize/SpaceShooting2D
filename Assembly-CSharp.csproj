@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Data\GuildedCraftData.cs" />
+     <Compile Include="Assets\Data\PlayerData.cs" />
      <Compile Include="Assets\Data\SimpleEnemyData.cs" />
      <Compile Include="Assets\Scripts\ArrayUtils.cs" />
      <Compile Include="Assets\Scripts\BulletEmitter.cs" />
@@ -58,9 +59,12 @@
      <Compile Include="Assets\Scripts\Enemy.cs" />
      <Compile Include="Assets\Scripts\GlobalTimer.cs" />
      <Compile Include="Assets\Scripts\IExplodable.cs" />
+     <Compile Include="Assets\Scripts\LookAtTarget.cs" />
+     <Compile Include="Assets\Scripts\Move.cs" />
      <Compile Include="Assets\Scripts\MyBullet.cs" />
      <Compile Include="Assets\Scripts\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\PlaneController.cs" />
+     <Compile Include="Assets\Scripts\PulseBulletEmitter.cs" />
      <Compile Include="Assets\Scripts\Scheduler.cs" />
      <Compile Include="Assets\Scripts\Spawner.cs" />
      <Compile Include="Assets\Scripts\TrackController.cs" />

@@ -34,8 +34,11 @@ public class MyBullet : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         IExplodable explodable = other.gameObject.GetComponent<IExplodable>();
-        explodable.DealDamage(damage);
-        gameObject.SetActive(false);    // once hitted, should recycle myself
+        if (explodable != null)
+        {
+            explodable.DealDamage(damage);
+            gameObject.SetActive(false);    // once hitted, should recycle myself
+        }
     }
 
     void Recycle()
