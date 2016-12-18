@@ -53,6 +53,7 @@
      <Compile Include="Assets\Data\PlayerData.cs" />
      <Compile Include="Assets\Data\SimpleEnemyData.cs" />
      <Compile Include="Assets\Scripts\core\Jugular.cs" />
+     <Compile Include="Assets\Scripts\event\EEvent.cs" />
      <Compile Include="Assets\Scripts\event\EventDispatcher.cs" />
      <Compile Include="Assets\Scripts\event\Signal.cs" />
      <Compile Include="Assets\Scripts\game\ArrayUtils.cs" />
