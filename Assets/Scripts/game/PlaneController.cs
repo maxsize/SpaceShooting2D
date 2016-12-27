@@ -29,6 +29,8 @@ public class PlaneController : MonoBehaviour, IExplodable {
     void Start () {
 		plane = transform;
 		health = playerData.Health;
+
+		Debug.Log(gameObject.name);
 	}
 	
 	// Update is called once per frame

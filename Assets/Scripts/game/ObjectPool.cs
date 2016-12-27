@@ -62,7 +62,8 @@ public class ObjectPool : MonoBehaviour
 		}
 	}
 
-	public GameObject GetObject( GameObject objectType)
+	public GameObject 
+	GetObject( GameObject objectType)
 	{
 		//Loop through the collection of prefabs...
 		for(int i=0; i<prefabs.Length; i++)

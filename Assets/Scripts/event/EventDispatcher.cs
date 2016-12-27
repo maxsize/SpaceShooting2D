@@ -29,7 +29,7 @@ namespace max.events{
 			}
 			
 			bool exists = list.Contains(listener);
-			Assert.IsTrue(exists);
+			Assert.IsFalse(exists);
 			if (!exists)
 			{
 				list.Add(listener);
@@ -81,7 +81,7 @@ namespace max.events{
 		{
 			Transform _transform = transform;
 			List<EventDispatcher> chain = new List<EventDispatcher>();
-			while (_transform.parent != null)
+			while (_transform != null)
 			{
 				EventDispatcher dispatcher = _transform.gameObject.GetComponent<EventDispatcher>();
 				if (dispatcher == null)	break;
