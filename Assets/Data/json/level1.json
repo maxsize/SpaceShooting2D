@@ -9,13 +9,37 @@
         {
             "name":"Plane.EmitterPrefab_left",
             "components":[
-                "BulletEmitter"
+                {
+                    "name":"BulletEmitter",
+                    "parameters":[
+                        {
+                            "name":"fireRate",
+                            "value":0.1
+                        },
+                        {
+                            "name":"bullet",
+                            "value":"MyBullet"
+                        }
+                    ]
+                }
             ]
         },
         {
             "name":"Plane.EmitterPrefab_right",
             "components":[
-                "BulletEmitter"
+                {
+                    "name":"BulletEmitter",
+                    "parameters":[
+                        {
+                            "name":"fireRate",
+                            "value":0.1
+                        },
+                        {
+                            "name":"bullet",
+                            "value":"MyBullet"
+                        }
+                    ]
+                }
             ]
         },
         {

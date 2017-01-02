@@ -4,6 +4,8 @@ Project("{A1BC57BD-1AAE-F27F-CA51-03424D3777AD}") = "SpaceShooting2D", "Assembly
 EndProject
 Project("{A1BC57BD-1AAE-F27F-CA51-03424D3777AD}") = "SpaceShooting2D", "Assembly-CSharp-Editor-firstpass.csproj", "{7816C23C-F5FD-66B4-E443-A64632CB3D80}"
 EndProject
+Project("{A1BC57BD-1AAE-F27F-CA51-03424D3777AD}") = "SpaceShooting2D", "Assembly-CSharp-Editor.csproj", "{42DCDB04-F159-C51F-550D-5F858BE81F7C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,6 +20,10 @@ Global
 		{7816C23C-F5FD-66B4-E443-A64632CB3D80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7816C23C-F5FD-66B4-E443-A64632CB3D80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7816C23C-F5FD-66B4-E443-A64632CB3D80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42DCDB04-F159-C51F-550D-5F858BE81F7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42DCDB04-F159-C51F-550D-5F858BE81F7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42DCDB04-F159-C51F-550D-5F858BE81F7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42DCDB04-F159-C51F-550D-5F858BE81F7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj

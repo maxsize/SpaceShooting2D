@@ -4,7 +4,7 @@ using System.Collections;
 public class BulletEmitter : MonoBehaviour
 {
     public float fireRate = 0.1f;
-    public GameObject bullet;   // bullet prefab
+    public string bullet;   // bullet prefab
 
     /// <summary>
     /// Start is called on the frame when a script is enabled just before

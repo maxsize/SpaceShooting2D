@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine.Assertions;
 using System;
+using UnityEngine;
 
 public class Signal {
 
@@ -51,6 +52,11 @@ public class Signal {
 	public void dispatch<T>(T value)
 	{
 		Assert.IsNotNull(ParamType);
+		
+		#if Debug
+			Debug.Log(value.GetType().Name + ", " + ParamType.Name);
+		#endif
+
 		bool valid = value.GetType() == ParamType;
 		if (valid)
 		{

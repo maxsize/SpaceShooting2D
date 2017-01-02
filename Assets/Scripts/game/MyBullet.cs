@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MyBullet : MonoBehaviour
 {
-    public float lifeTime = 1f;
+    public float lifeTime = 1.0f;
     public float speed = 10f;
     public float damage = 1f;
     Rigidbody2D rigi;

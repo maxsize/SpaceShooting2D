@@ -75,6 +75,12 @@ class MappingData
 }
 
 [Serializable]
+class ComponentData
+{
+	public string name;
+}
+
+[Serializable]
 class Mapping
 {
 	public MappingData[] mappings;

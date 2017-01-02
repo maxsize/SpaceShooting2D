@@ -62,15 +62,14 @@ public class ObjectPool : MonoBehaviour
 		}
 	}
 
-	public GameObject 
-	GetObject( GameObject objectType)
+	public GameObject GetObject( string typeName)
 	{
 		//Loop through the collection of prefabs...
 		for(int i=0; i<prefabs.Length; i++)
 		{
 			//...to find the one of the correct type
 			GameObject prefab = prefabs[i];
-			if(prefab.name == objectType.name)
+			if(prefab.name == typeName)
 			{
 				//If there are any left in the pool...
 				if(pooledObjects[i].Count > 0)
@@ -89,7 +88,7 @@ public class ObjectPool : MonoBehaviour
 				else if(canGrow) 
 				{
 					//...write it to the log (so we know to adjust our values...
-					Debug.Log("pool grew when requesting: " + objectType + ". consider expanding default size.");
+					Debug.Log("pool grew when requesting: " + typeName + ". consider expanding default size.");
 					//...create a new one...
 					GameObject obj = Instantiate(prefabs[i]) as GameObject;
 					//...give it a name...

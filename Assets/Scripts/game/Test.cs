@@ -19,6 +19,6 @@ public class Test : MonoBehaviour
             var node = new Node(root.transform);
             Debug.Log(node.ToString());
         }*/
-        ComponentAppender.Append(SceneManager.GetActiveScene());
+        //ComponentAppender.Append(SceneManager.GetActiveScene());
     }
 }
