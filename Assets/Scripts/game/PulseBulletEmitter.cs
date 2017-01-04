@@ -6,7 +6,7 @@ public class PulseBulletEmitter : MonoBehaviour
     public float fireRate = 0.1f;
     public float fireGap = 1.5f;
     public int numBulletEachPulse = 10;
-    public GameObject bullet;
+    public string bullet;
 
     /// <summary>
     /// Start is called on the frame when a script is enabled just before

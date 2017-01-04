@@ -38,6 +38,18 @@ public class AssetManager
         loader.LoadBundle(bundleName);
         return loader;
     }
+
+    public static AssetBundle GetBundle(string root, string bundleName)
+    {
+        ManifestLoader loader;
+        manifestMap.TryGetValue(root, out loader);
+        if (loader == null)
+        {
+            Debug.LogError("Bundle is not loaded yet!");
+            return null;
+        }
+        return loader.GetBundle(bundleName);
+    }
 }
 
 class ManifestLoader : Signal
@@ -45,6 +57,7 @@ class ManifestLoader : Signal
     // public static string ASSET_LOADED = "assetLoaded";
     // public static string BUNDLE_LOADED = "bundleLoaded";
 
+    private const string MAIN_BUNDLE_NAME = "AssetBundles";
     private AssetBundleManifest _manifestIns;
     private string root;
     private Dictionary<string, AssetBundle> bundleMap;
@@ -74,6 +87,13 @@ class ManifestLoader : Signal
     public void LoadBundle(string bundleName)
     {
         mono.StartCoroutine(WaitAndLoad(bundleName));
+    }
+
+    public AssetBundle GetBundle(string bundleName)
+    {
+        AssetBundle bundle;
+        bundleMap.TryGetValue(bundleName, out bundle);
+        return bundle;
     }
 
     public void DisposeBundle(string bundleName, bool unloadAllLoaded = false)
@@ -140,8 +160,8 @@ class ManifestLoader : Signal
 
     private IEnumerator LoadManifest()
     {
-        yield return mono.StartCoroutine(LoadBundleOnly("AssetBundles", false));
-        AssetBundle bundle = bundleMap["AssetBundles"];
+        yield return mono.StartCoroutine(LoadBundleOnly(MAIN_BUNDLE_NAME, false));
+        AssetBundle bundle = bundleMap[MAIN_BUNDLE_NAME];
         AssetBundleRequest request = bundle.LoadAssetAsync<AssetBundleManifest>("AssetBundleManifest");
         yield return request;
 
@@ -154,22 +174,6 @@ class ManifestLoader : Signal
         _manifestIns = request.asset as AssetBundleManifest;
         initialized = true;
         Debug.Log(root + " initialized");
-        yield break;
-    }
-
-    private IEnumerator LoadAsset<T>(string bundleName, string assetName, T assetType)
-    {
-        yield return mono.StartCoroutine(LoadBundleOnly("AssetBundles"));
-        AssetBundle bundle = bundleMap[root];
-        AssetBundleRequest request = bundle.LoadAssetAsync<T>(assetName);
-        yield return request;
-
-        if (request.asset == null)
-        {
-            Debug.LogError("Failed to load asset " + assetName);
-            yield break;
-        }
-        throwEvent(request.asset);
         yield break;
     }
 

@@ -9,7 +9,7 @@ public class ArrayUtils
     ///</summary>
     public static T RemoveAt<T>(ref T[] arr, int index)
     {
-        Assert.IsTrue (index >= 0 && index <= arr.Length, "Index " + index + " out of range.");
+        AssertRange(ref arr, index);
         var item = arr[index];
         for (int a = index; a < arr.Length - 1; a++)
         {
@@ -19,6 +19,32 @@ public class ArrayUtils
         // finally, let's decrement Array's size by one
         Array.Resize(ref arr, arr.Length - 1);
         return item;
+    }
+
+    ///<summary>
+    /// Add item into specified array in specified index
+    ///</summary>
+    public static void AddAt<T> (ref T[] arr, T item, int index)
+    {
+        AssertRange(ref arr, index);
+        Array.Resize(ref arr, arr.Length + 1);
+        T current = item;
+        for (int i = index; i < arr.Length; i++)
+        {
+            var temp = arr[index];
+            arr[index] = current;
+            current = temp;
+        }
+    }
+
+    public static void Push<T> (ref T[] arr, T item)
+    {
+        AddAt(ref arr, item, arr.Length);
+    }
+
+    public static void Unshift<T> (ref T[] arr, T item)
+    {
+        AddAt(ref arr, item, 0);
     }
 
     public static string Join<T>( ref T[] arr, string seperator = ", ")
@@ -34,5 +60,10 @@ public class ArrayUtils
             }
         }
         return result;
+    }
+
+    private static void AssertRange<T> (ref T[] arr, int index)
+    {
+        Assert.IsTrue (index >= 0 && index <= arr.Length, "Index " + index + " out of range.");
     }
 }

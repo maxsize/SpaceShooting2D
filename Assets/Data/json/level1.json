@@ -3,7 +3,6 @@
         {
             "name":"Main Camera",
             "components":[
-                "ObjectPool"
             ]
         },
         {
@@ -45,27 +44,57 @@
         {
             "name":"Plane",
             "components":[
-                "PlaneController"
+                {
+                    "name":"PlaneController",
+                    "parameters":[
+                        
+                    ]
+                }
             ]
         },
         {
             "name":"FighterSpawn",
             "components":[
-                "Spawner"
+                {
+                    "name":"Spawner",
+                    "parameters":[
+                        
+                    ]
+                }
             ]
         },
         {
             "name":"FighterSpawn.Craft",
             "components":[
-                "TrackController",
-                "Enemy"
+                {
+                    "name":"TrackController",
+                    "parameters":[
+                        
+                    ]
+                },
+                {
+                    "name":"Enemy",
+                    "parameters":[
+                        
+                    ]
+                }
             ]
         },
         {
             "name":"TankTrack.Tank",
             "components":[
-                "Move",
-                "LookAtTarget"
+                {
+                    "name":"Move",
+                    "parameters":[
+                        
+                    ]
+                },
+                {
+                    "name":"LookAtTarget",
+                    "parameters":[
+                        
+                    ]
+                }
             ]
         }
     ]

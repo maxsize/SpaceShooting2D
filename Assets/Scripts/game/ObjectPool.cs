@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class ObjectPool : MonoBehaviour
 {
-	public static ObjectPool _current;			//A public static reference to itself (make's it visible to other objects without a reference)
+	private static ObjectPool _current;			//A public static reference to itself (make's it visible to other objects without a reference)
 	public GameObject[] prefabs;				//Collection of prefabs to be poooled
 	public List<GameObject>[] pooledObjects;	//The actual collection of pooled objects
 	public int[] amountToBuffer;				//The amount to pool of each object. This is optional

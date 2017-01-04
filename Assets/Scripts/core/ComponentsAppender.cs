@@ -25,10 +25,10 @@ public class ComponentAppender {
 	private static void RecursivelyAppend(Node node, Mapping data)
 	{
 		FindMappingAndAppend(node, data);
-		for (int i = 0; i < node.children.Count; i++)
-		{
-			RecursivelyAppend(node.children[i] as Node, data);
-		}
+		// for (int i = 0; i < node.children.Count; i++)
+		// {
+		// 	RecursivelyAppend(node.children[i] as Node, data);
+		// }
 	}
 
 	private static void FindMappingAndAppend (Node node, Mapping data)
@@ -44,23 +44,45 @@ public class ComponentAppender {
 				break;
 			}
 		}
-		Assert.IsTrue(found, "No mapping was found for node " + node.path);
 	}
 
-	private static void DoAppend (Node node, string[] components)
+	private static void DoAppend (Node node, ComponentData[] components)
 	{
 		GameObject gameObject = node.host.gameObject;
-		MethodInfo method = gameObject.GetType().GetMethod("AddComponent");
+		// Type objType = gameObject.GetType();
 		for (int i = 0; i < components.Length; i++)
 		{
-			string className = components[i];
+			string className = components[i].name;
 			Type type = Type.GetType(className);
-			method.MakeGenericMethod(type);
-			method.Invoke(gameObject, null);
+			// Type[] types = new Type[]{type};
+			// MethodInfo method = objType.GetMethod("AddComponent", types);
+			// method.MakeGenericMethod(type);
+			// var compIns = method.Invoke(gameObject, null);
+			var compIns = gameObject.AddComponent(type);
+			SetParameters(compIns, components[i].parameters);
 		}
 	}
 
-	private static Mapping GetJson (string name)
+    private static void SetParameters(object compIns, KeyValue[] parameters)
+    {
+		Type type = compIns.GetType();
+		for (int i = 0; i < parameters.Length; i++)
+		{
+			var kv = parameters[i];
+			var f = type.GetField(kv.name);
+			if (f != null)
+			{
+				f.SetValue(compIns, kv.value);
+			}
+			var a = type.GetProperty(kv.name);
+			if (a != null && a.CanWrite)
+			{
+				a.SetValue(compIns, kv.value, null);
+			}
+		}
+    }
+
+    private static Mapping GetJson (string name)
 	{
 		string jsonData = File.ReadAllText(JSON_PATH + name);
 		return JsonUtility.FromJson<Mapping>(jsonData);
@@ -71,13 +93,21 @@ public class ComponentAppender {
 class MappingData
 {
 	public string name;
-	public string[] components;
+	public ComponentData[] components;
 }
 
 [Serializable]
 class ComponentData
 {
 	public string name;
+	public KeyValue[] parameters;
+}
+
+[Serializable]
+class KeyValue
+{
+	public string name;
+	public object value;
 }
 
 [Serializable]
