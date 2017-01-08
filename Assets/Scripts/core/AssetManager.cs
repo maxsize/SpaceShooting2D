@@ -45,7 +45,7 @@ public class AssetManager
         manifestMap.TryGetValue(root, out loader);
         if (loader == null)
         {
-            Debug.LogError("Bundle is not loaded yet!");
+            Debug.LogError("Bundle " + bundleName + " is not loaded yet!");
             return null;
         }
         return loader.GetBundle(bundleName);
@@ -189,28 +189,37 @@ class ManifestLoader : Signal
             yield break;
         }
 
-        string fullPath = MultiLookUp.Acquire(Path.Combine(root, bundleName));
-        if (fullPath == null)
+        LookUp lu = MultiLookUp.Acquire(Path.Combine(root, bundleName));
+        while (lu.Current != null)
         {
-            throwEvent(new Exception("Failed to load bundle " + bundleName));
-            yield break;
-        }
-        UnityWebRequest www = UnityWebRequest.GetAssetBundle(fullPath);
+            UnityWebRequest www = UnityWebRequest.GetAssetBundle(lu.Current);
         
-        yield return www.Send();
+            yield return www.Send();
 
-        if (www.isError)
-        {
-            Debug.LogError("Failed to load bundle");
-            yield break;
+            if (www.isError || www.responseCode != (long)System.Net.HttpStatusCode.OK)
+            {
+                www.Dispose();
+                Debug.Log("Failed to load bundle on " + lu.Current + ", looking for next lookup");
+                bool hasNext = lu.Next();      // try next lookup
+                if (!hasNext)
+                {
+                    throwEvent(null);
+                    yield break;    // exit coroutine
+                }
+            }
+            else
+            {
+                DownloadHandlerAssetBundle handler = www.downloadHandler as DownloadHandlerAssetBundle;
+                bundle = handler.assetBundle;
+                bundleMap.Add(bundleName, bundle);
+                www.Dispose();
+                if (throwEventAfterLoad) throwEvent(bundleMap[bundleName]);
+                Debug.Log("Bundle " + bundleName + " loaded.");
+                yield break;
+            }
         }
 
-        DownloadHandlerAssetBundle handler = www.downloadHandler as DownloadHandlerAssetBundle;
-        bundle = handler.assetBundle;
-        bundleMap.Add(bundleName, bundle);
-        www.Dispose();
-        if (throwEventAfterLoad) throwEvent(bundleMap[bundleName]);
-        Debug.Log("Bundle " + bundleName + " loaded.");
+        throwEvent(null);
         yield break;
     }
 

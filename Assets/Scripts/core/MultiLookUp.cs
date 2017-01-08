@@ -4,33 +4,68 @@ using System.IO;
 
 public class MultiLookUp
 {
-    private static List<string> lookup = new List<string>();
+    private static List<string> rootURIs = new List<string>();
+    private static Dictionary<string, LookUp> dic = new Dictionary<string, LookUp>();
     private static int Count = 0;
 
     public static void AddLookUp(string uri)
     {
-        ArrayUtils.AddUnique<string>(lookup, uri);
-        Count = lookup.Count;
+        ArrayUtils.AddUnique<string>(rootURIs, uri);
+        Count = rootURIs.Count;
     }
 
-    public static bool RemoveLookUp(string uri)
+    public static LookUp Acquire(string relativePath)
     {
-        bool founded = lookup.Remove(uri);
-        Count = lookup.Count;
-        return founded;
+        LookUp lookup;
+        if (dic.TryGetValue(relativePath, out lookup))
+        {
+            return lookup;
+        }
+        lookup = CreateLookUp(relativePath);
+        dic.Add(relativePath, lookup);
+        return lookup;
     }
 
-    public static string Acquire(string relativePath)
+    private static LookUp CreateLookUp(string path)
     {
-        string obsolutePath;
+        var list = new List<string>();
         for (int i = 0; i < Count; i++)
         {
-            obsolutePath = Path.Combine(lookup[i], relativePath);
-            if (File.Exists(obsolutePath))
-            {
-                return obsolutePath;
-            }
+            list.Add(Path.Combine(rootURIs[i], path));
         }
-        return null;
+        var lu = new LookUp(list.ToArray());
+        return lu;
+    }
+}
+
+public class LookUp
+{
+    string[] paths;
+    int index = 0;
+
+    public LookUp(string[] paths)
+    {
+        this.paths = paths;
+    }
+
+    public bool Next()
+    {
+        if (index < paths.Length - 1)
+        {
+            index++;
+            return true;
+        }
+        index = -1;
+        return false;
+    }
+
+    public string Current
+    {
+        get
+        {
+            if (index < 0)
+                return null;
+            return paths[index];
+        }
     }
 }

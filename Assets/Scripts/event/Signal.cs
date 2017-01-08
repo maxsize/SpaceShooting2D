@@ -57,7 +57,7 @@ public class Signal {
 			Debug.Log(value.GetType().Name + ", " + ParamType.Name);
 		#endif
 
-		bool valid = value.GetType() == ParamType;
+		bool valid = value == null || value.GetType() == ParamType;
 		if (valid)
 		{
 			for (int i = 0; i < list.Count; i++)

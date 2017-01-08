@@ -23,10 +23,11 @@ public class Main : MonoBehaviour
         
         SceneManager.LoadScene("level1", LoadSceneMode.Additive);*/
         // StartCoroutine(BundleLoader.LoadBundle("http://localhost:8080/AssetBundles/AssetBundles"));
+        MultiLookUp.AddLookUp("http://localhost:8081/");
         MultiLookUp.AddLookUp("http://localhost:8080/");
         Metadata.Initialize();
         AssetManager.Initialize(this);
-        var signal = AssetManager.LoadBundle("http://localhost:8080/AssetBundles/", "level1");
+        var signal = AssetManager.LoadBundle("AssetBundles", "level1");
         signal.Add<object>(OnBundleLoaded);
     }
 
@@ -41,7 +42,7 @@ public class Main : MonoBehaviour
         //assets/prefabs/pulseemitterprefab.prefab
         //assets/prefabs/waypoint.prefab
 
-        AssetBundle bundle = AssetManager.GetBundle("http://localhost:8080/AssetBundles/", "prefabs");
+        AssetBundle bundle = AssetManager.GetBundle("AssetBundles", "prefabs");
         Debug.Log("Bundle loaded, requesting asset");
         
         StartCoroutine(LoadAndAppend(bundle));
