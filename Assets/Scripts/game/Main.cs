@@ -23,6 +23,8 @@ public class Main : MonoBehaviour
         
         SceneManager.LoadScene("level1", LoadSceneMode.Additive);*/
         // StartCoroutine(BundleLoader.LoadBundle("http://localhost:8080/AssetBundles/AssetBundles"));
+        MultiLookUp.AddLookUp("http://localhost:8080/");
+        Metadata.Initialize();
         AssetManager.Initialize(this);
         var signal = AssetManager.LoadBundle("http://localhost:8080/AssetBundles/", "level1");
         signal.Add<object>(OnBundleLoaded);
@@ -41,18 +43,26 @@ public class Main : MonoBehaviour
 
         AssetBundle bundle = AssetManager.GetBundle("http://localhost:8080/AssetBundles/", "prefabs");
         Debug.Log("Bundle loaded, requesting asset");
-        var MyBullet = bundle.LoadAsset("assets/prefabs/mybulletprefab.prefab") as GameObject;
-        Debug.Log("Asset loaded " + MyBullet);
-        GameObject[] pools = ObjectPool.current.prefabs;
-        ArrayUtils.Push(ref pools, MyBullet);
         
-        StartCoroutine(LoadAndAppend());
+        StartCoroutine(LoadAndAppend(bundle));
     }
 
-    private IEnumerator LoadAndAppend()
+    private IEnumerator LoadAndAppend(AssetBundle bundle)
     {
         yield return StartCoroutine(LoadScene());
         Scene level1 = SceneManager.GetSceneByName("level1");
+
+        ComponentAppender.Initialize(level1.name);
+        var MyBullet = bundle.LoadAsset("assets/prefabs/mybulletprefab.prefab") as GameObject;
+        var PulseBullet = bundle.LoadAsset("assets/prefabs/pulsebulletprefab.prefab") as GameObject;
+        ComponentAppender.AppendOnPrefab(MyBullet);
+        ComponentAppender.AppendOnPrefab(PulseBullet);
+
+        Debug.Log("Asset loaded " + MyBullet);
+        GameObject[] pools = ObjectPool.current.prefabs;
+        ArrayUtils.Push(ref pools, MyBullet);
+        ArrayUtils.Push(ref pools, PulseBullet);
+
         ComponentAppender.Append(level1);
     }
 

@@ -49,20 +49,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Data\EnemyVO.cs" />
+     <Compile Include="Assets\Data\FireRateVO.cs" />
      <Compile Include="Assets\Data\GuildedCraftData.cs" />
-     <Compile Include="Assets\Data\PlayerData.cs" />
+     <Compile Include="Assets\Data\Metadata.cs" />
+     <Compile Include="Assets\Data\PlayerEmitterVO.cs" />
+     <Compile Include="Assets\Data\PlayerVO.cs" />
+     <Compile Include="Assets\Data\PulseEmitterVO.cs" />
      <Compile Include="Assets\Data\SimpleEnemyData.cs" />
+     <Compile Include="Assets\Scripts\core\ArrayUtils.cs" />
      <Compile Include="Assets\Scripts\core\AssemblyUtils.cs" />
      <Compile Include="Assets\Scripts\core\AssetManager.cs" />
      <Compile Include="Assets\Scripts\core\ComponentsAppender.cs" />
      <Compile Include="Assets\Scripts\core\Jugular.cs" />
+     <Compile Include="Assets\Scripts\core\MultiLookUp.cs" />
+     <Compile Include="Assets\Scripts\core\Utils.cs" />
      <Compile Include="Assets\Scripts\event\EEvent.cs" />
      <Compile Include="Assets\Scripts\event\EventDispatcher.cs" />
      <Compile Include="Assets\Scripts\event\Signal.cs" />
-     <Compile Include="Assets\Scripts\game\ArrayUtils.cs" />
      <Compile Include="Assets\Scripts\game\BulletEmitter.cs" />
-     <Compile Include="Assets\Scripts\game\CraftSpawner.cs" />
-     <Compile Include="Assets\Scripts\game\Destroyer.cs" />
      <Compile Include="Assets\Scripts\game\Enemy.cs" />
      <Compile Include="Assets\Scripts\game\GlobalTimer.cs" />
      <Compile Include="Assets\Scripts\game\IExplodable.cs" />
@@ -75,7 +80,6 @@
      <Compile Include="Assets\Scripts\game\PulseBulletEmitter.cs" />
      <Compile Include="Assets\Scripts\game\Scheduler.cs" />
      <Compile Include="Assets\Scripts\game\Spawner.cs" />
-     <Compile Include="Assets\Scripts\game\Test.cs" />
      <Compile Include="Assets\Scripts\game\TrackController.cs" />
      <Compile Include="Assets\Scripts\game\Waypoint.cs" />
      <Compile Include="Assets\Scripts\game\WaypointGizmos.cs" />

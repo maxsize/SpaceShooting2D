@@ -4,15 +4,17 @@ using System;
 
 public class TrackController : MonoBehaviour {
 
-	public GameObject WaypointsContainer;
+	public string WaypointsContainerName;
 	public float turnSpeed = 4;
 	public float speed = 5;
 	public float treashold = 0.1f;
-	// Use this for initialization
+
+	GameObject WaypointsContainer;
 	int currentWaypoint = 0;
 	Rigidbody2D craft;
 	Transform[] track;
 	void Start () {
+		WaypointsContainer = Utils.Query(transform.parent, WaypointsContainerName).gameObject;
 		track = GetWaypoints();
 		craft = GetComponent<Rigidbody2D>();
 		craft.velocity = (track[0].position - craft.transform.position).normalized * speed;

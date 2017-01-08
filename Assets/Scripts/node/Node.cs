@@ -4,22 +4,23 @@ using System;
 
 public interface INode
 {
-    INode parent {get;set;}
-    List<INode> children {get;}
+    Node parent {get;}
+    List<Node> children {get;}
     string name {get;}
     string path {get;}
     Transform host {get;}
+    Node GetChildAt(int index);
 }
 
 public class Node : INode
 {
-    public INode parent
+    public Node parent
     {
         get { return _parent; }
-        set { _parent = value; }
+        // set { _parent = value; }
     }
 
-    public List<INode> children
+    public List<Node> children
     {
         get { return _children; }
     }
@@ -46,35 +47,45 @@ public class Node : INode
         }
     }
 
+    public Node GetChildAt(int index)
+    {
+        return _children[index];
+    }
+
     Transform _host;
-    INode _parent;
-    List<INode> _children;
+    Node _parent;
+    List<Node> _children;
     string _path;
 
-    public Node(Transform host)
+    public Node(Transform host, Node parent = null)
     {
         this._host = host;
+        this._parent = parent;
         init();
     }
 
     private void init()
     {
-        _children = new List<INode>();
+        _children = new List<Node>();
 
-        foreach (Transform trans in _host)
+        for (int i = 0; i < _host.childCount; i++)
         {
-            var node = new Node(trans);
-            node.parent = this;
+            var trans = _host.GetChild(i);
+            var node = new Node(trans, this);
             _children.Add(node);
         }
+
+        _path = getPath();
     }
 
     string getPath()
     {
         string p = name;
-        while (parent != null)
+        Node currentParent = _parent;
+        while (currentParent != null)
         {
-            p = parent.name + "." + p;
+            p = currentParent.name + "." + p;
+            currentParent = currentParent.parent;
         }
         return p;
     }

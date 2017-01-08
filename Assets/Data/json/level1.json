@@ -11,14 +11,7 @@
                 {
                     "name":"BulletEmitter",
                     "parameters":[
-                        {
-                            "name":"fireRate",
-                            "value":0.1
-                        },
-                        {
-                            "name":"bullet",
-                            "value":"MyBullet"
-                        }
+                        
                     ]
                 }
             ]
@@ -29,14 +22,7 @@
                 {
                     "name":"BulletEmitter",
                     "parameters":[
-                        {
-                            "name":"fireRate",
-                            "value":0.1
-                        },
-                        {
-                            "name":"bullet",
-                            "value":"MyBullet"
-                        }
+                        
                     ]
                 }
             ]
@@ -47,7 +33,10 @@
                 {
                     "name":"PlaneController",
                     "parameters":[
-                        
+                        {
+                            "name":"playerVOName",
+                            "value":"Normal"
+                        }
                     ]
                 }
             ]
@@ -58,7 +47,10 @@
                 {
                     "name":"Spawner",
                     "parameters":[
-                        
+                        {
+                            "name":"templateName",
+                            "value":"Craft"
+                        }
                     ]
                 }
             ]
@@ -69,13 +61,23 @@
                 {
                     "name":"TrackController",
                     "parameters":[
-                        
+                        {
+                            "name":"WaypointsContainerName",
+                            "value":"Track"
+                        }
                     ]
                 },
                 {
                     "name":"Enemy",
                     "parameters":[
-                        
+                        {
+                            "name":"enemyVOName",
+                            "value":"Craft"
+                        },
+                        {
+                            "name":"explosion",
+                            "value":"ExplosionPrefab"
+                        }
                     ]
                 }
             ]
@@ -86,14 +88,55 @@
                 {
                     "name":"Move",
                     "parameters":[
-                        
+                        {
+                            "name":"speed",
+                            "value":"5"
+                        }
                     ]
-                },
+                }
+            ]
+        },
+        {
+            "name":"TankTrack.Tank.turret",
+            "components":[
                 {
                     "name":"LookAtTarget",
                     "parameters":[
-                        
+                        {
+                            "name":"TargetTag",
+                            "value":"Player"
+                        }
                     ]
+                }
+            ]
+        },
+        {
+            "name":"TankTrack.Tank.turret.PulseEmitter",
+            "components":[
+                {
+                    "name":"PulseBulletEmitter",
+                    "parameters":[
+                        {
+                            "name":"emitterName",
+                            "value":"PulseEmitter1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name":"MyBulletPrefab",
+            "components":[
+                {
+                    "name":"MyBullet"
+                }
+            ]
+        },
+        {
+            "name":"PulseBulletPrefab",
+            "components":[
+                {
+                    "name":"MyBullet"
                 }
             ]
         }

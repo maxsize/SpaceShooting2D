@@ -189,7 +189,14 @@ class ManifestLoader : Signal
             yield break;
         }
 
-        UnityWebRequest www = UnityWebRequest.GetAssetBundle(Path.Combine(root, bundleName));
+        string fullPath = MultiLookUp.Acquire(Path.Combine(root, bundleName));
+        if (fullPath == null)
+        {
+            throwEvent(new Exception("Failed to load bundle " + bundleName));
+            yield break;
+        }
+        UnityWebRequest www = UnityWebRequest.GetAssetBundle(fullPath);
+        
         yield return www.Send();
 
         if (www.isError)

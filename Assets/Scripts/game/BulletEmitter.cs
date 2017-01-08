@@ -3,8 +3,7 @@ using System.Collections;
 
 public class BulletEmitter : MonoBehaviour
 {
-    public float fireRate = 0.1f;
-    public string bullet;   // bullet prefab
+    PlayerEmitterVO playerEmitter;
 
     /// <summary>
     /// Start is called on the frame when a script is enabled just before
@@ -12,6 +11,7 @@ public class BulletEmitter : MonoBehaviour
     /// </summary>
     void Start()
     {
+        playerEmitter = Metadata.Instance.playerEmitter;
         StartCoroutine("fire");
     }
 
@@ -27,6 +27,7 @@ public class BulletEmitter : MonoBehaviour
     {
         while(true)
         {
+            FireRateVO rate = playerEmitter.fireRates[0];
             GameObject newBullet = getBullet();
             if (newBullet)
             {
@@ -35,13 +36,13 @@ public class BulletEmitter : MonoBehaviour
                 newBullet.SetActive(true);
                 // newBullet.transform.parent = transform.parent;
             }
-            yield return new WaitForSeconds(fireRate);
+            yield return new WaitForSeconds(rate.fireRate);
         }
     }
 
     GameObject getBullet()
     {
-        return ObjectPool.current.GetObject(bullet);
+        return ObjectPool.current.GetObject(playerEmitter.bullet);
         // return Instantiate(bullet, transform.position, transform.rotation) as GameObject;
     }
 }

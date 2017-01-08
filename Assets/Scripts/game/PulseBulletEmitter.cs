@@ -3,10 +3,9 @@ using System.Collections;
 
 public class PulseBulletEmitter : MonoBehaviour
 {
-    public float fireRate = 0.1f;
-    public float fireGap = 1.5f;
-    public int numBulletEachPulse = 10;
-    public string bullet;
+    public string emitterName;
+
+    PulseEmitterVO emitter;
 
     /// <summary>
     /// Start is called on the frame when a script is enabled just before
@@ -14,6 +13,7 @@ public class PulseBulletEmitter : MonoBehaviour
     /// </summary>
     void Start()
     {
+        emitter = ArrayUtils.GetObjectByPrimaryKey<PulseEmitterVO>(ref Metadata.Instance.pulseEmitters, "name", emitterName);
         StartCoroutine("fire");
     }
 
@@ -29,7 +29,7 @@ public class PulseBulletEmitter : MonoBehaviour
     {
         while (true)
         {
-            for (int i = 0; i < numBulletEachPulse; i++)
+            for (int i = 0; i < emitter.numBulletEachPulse; i++)
             {
                 GameObject b = getBullet();
                 if (b)
@@ -38,14 +38,14 @@ public class PulseBulletEmitter : MonoBehaviour
                     b.transform.rotation = transform.rotation;
                     b.SetActive(true);
                 }
-                yield return new WaitForSeconds(fireRate);
+                yield return new WaitForSeconds(emitter.fireRates[0].fireRate);
             }
-            yield return new WaitForSeconds(fireGap);
+            yield return new WaitForSeconds(emitter.fireGap);
         }
     }
 
     GameObject getBullet()
     {
-        return ObjectPool.current.GetObject(bullet) as GameObject;
+        return ObjectPool.current.GetObject(emitter.bullet) as GameObject;
     }
 }

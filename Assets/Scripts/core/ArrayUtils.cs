@@ -1,5 +1,7 @@
 using System;
 using UnityEngine.Assertions;
+using UnityEngine;
+using System.Collections.Generic;
 
 public class ArrayUtils
 {
@@ -47,6 +49,29 @@ public class ArrayUtils
         AddAt(ref arr, item, 0);
     }
 
+    ///<summary>
+    /// Find object by specified key and value, make sure item in the array contains specified key, otherwise it will throw error.
+    ///</summary>
+    public static T GetObjectByPrimaryKey<T>(ref T[] arr, string key, string value)
+    {
+        try
+        {
+            for (int i = 0; i < arr.Length; i++)
+            {
+                var current = arr[i];
+                if (current.GetType().GetField(key).GetValue(current).ToString() == value)
+                {
+                    return current;
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            Debug.LogError(e.Message);
+        }
+        return default(T);
+    }
+
     public static string Join<T>( ref T[] arr, string seperator = ", ")
     {
         string result = "";
@@ -60,6 +85,24 @@ public class ArrayUtils
             }
         }
         return result;
+    }
+
+    public static void AddUnique<T>(List<T> list, T toAdd)
+    {
+        var count = list.Count;
+        bool isFound = false;
+        for (int i = 0; i < count; i++)
+        {
+            if (list[i].Equals(toAdd))
+            {
+                isFound = true;
+                break;
+            }
+        }
+        if (!isFound)
+        {
+            list.Add(toAdd);
+        }
     }
 
     private static void AssertRange<T> (ref T[] arr, int index)

@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class LookAtTarget : MonoBehaviour
 {
-    public GameObject Target;
-
     public string TargetTag;
 
     /// <summary>
@@ -12,7 +10,7 @@ public class LookAtTarget : MonoBehaviour
     void Update()
     {
         GameObject lookTarget;
-        lookTarget = Target == null ? GameObject.FindWithTag(TargetTag):Target;
+        lookTarget = GameObject.FindWithTag(TargetTag);
 
         if (lookTarget)
         {

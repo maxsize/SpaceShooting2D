@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class Move : MonoBehaviour
 {
-    public float speed = 5;
+    public string speed = "5";
 
     Rigidbody2D rigid;
+    int speedInt;
 
     /// <summary>
     /// Start is called on the frame when a script is enabled just before
@@ -12,8 +13,9 @@ public class Move : MonoBehaviour
     /// </summary>
     void Start()
     {
+        int.TryParse(speed, out speedInt);
         rigid = GetComponent<Rigidbody2D>();
-        rigid.velocity = Vector2.up * speed;
+        rigid.velocity = Vector2.up * speedInt;
     }
 
     /// <summary>
@@ -21,6 +23,6 @@ public class Move : MonoBehaviour
     /// </summary>
     void Update()
     {
-        rigid.velocity = rigid.transform.up * speed;
+        rigid.velocity = rigid.transform.up * speedInt;
     }
 }

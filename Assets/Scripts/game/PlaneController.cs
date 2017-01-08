@@ -4,7 +4,9 @@ using System;
 
 public class PlaneController : MonoBehaviour, IExplodable {
 
-	public PlayerData playerData;
+	public string playerVOName;
+
+	PlayerVO playerData;
 	Transform plane;
 	float health;
 
@@ -27,10 +29,10 @@ public class PlaneController : MonoBehaviour, IExplodable {
 
     // Use this for initialization
     void Start () {
+		PlayerVO[] players = Metadata.Instance.players;
+		playerData = ArrayUtils.GetObjectByPrimaryKey<PlayerVO>(ref players, "name", playerVOName);
 		plane = transform;
 		health = playerData.Health;
-
-		Debug.Log(gameObject.name);
 	}
 	
 	// Update is called once per frame

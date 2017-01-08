@@ -4,28 +4,31 @@ using System;
 
 public class Spawner : MonoBehaviour {
 
-	public GameObject Template;
-	public int SpawnAmount = 2;
-	public float SpawnInterval = 0.8f;
+	public string templateName;
+	public int spawnAmount = 2;
+	public float spawnInterval = 0.8f;
 
 	Vector3 cachedPosition;
 	Quaternion cachedRotation;
+	GameObject template;
 
 	// Use this for initialization
 	void Start () {
-		cachedPosition = Template.transform.position;
-		cachedRotation = Template.transform.rotation;
+		template = Utils.Query(transform, templateName).gameObject;
+		cachedPosition = template.transform.position;
+		cachedRotation = template.transform.rotation;
 		StartCoroutine("Spawn");
 	}
 
 	IEnumerator Spawn()
 	{
-		for (int i = 0; i < SpawnAmount; i++)
+		for (int i = 0; i < spawnAmount; i++)
 		{
-			yield return new WaitForSeconds(SpawnInterval);
-			GameObject copy = Instantiate(Template, cachedPosition, cachedRotation) as GameObject;
-			copy.transform.parent = Template.transform.parent;
+			yield return new WaitForSeconds(spawnInterval);
+			GameObject copy = Instantiate(template, cachedPosition, cachedRotation) as GameObject;
+			copy.transform.parent = template.transform.parent;
 			copy.SetActive(true);
 		}
+		yield break;
 	}
 }

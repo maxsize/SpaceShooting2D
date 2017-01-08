@@ -1,9 +1,9 @@
 using UnityEngine;
 
-[CreateAssetMenuAttribute(fileName = "Player", menuName = "Player")]
-[System.SerializableAttribute]
-public class PlayerData : ScriptableObject
+[System.Serializable]
+public class PlayerVO
 {
+    public string name;
     public float Health = 5f;
     public float X_Speed = 12f;
     public float Y_Speed = 12f;

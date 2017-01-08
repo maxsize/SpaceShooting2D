@@ -2,20 +2,22 @@ using UnityEngine;
 
 public class MyBullet : MonoBehaviour
 {
-    public float lifeTime = 1.0f;
-    public float speed = 10f;
-    public float damage = 1f;
     Rigidbody2D rigi;
+    PlayerEmitterVO emitter;
+    FireRateVO rate;
     
     /// <summary>
     /// This function is called when the object becomes enabled and active.
     /// </summary>
     void OnEnable()
     {
-        rigi = GetComponent<Rigidbody2D>();
-        rigi.velocity = transform.up.normalized * speed;
+        emitter = Metadata.Instance.playerEmitter;
+        rate = emitter.fireRates[0];
 
-        Invoke("Recycle", lifeTime);
+        rigi = GetComponent<Rigidbody2D>();
+        rigi.velocity = transform.up.normalized * rate.speed;
+
+        Invoke("Recycle", emitter.lifeTime);
     }
 
     /// <summary>
@@ -36,7 +38,7 @@ public class MyBullet : MonoBehaviour
         IExplodable explodable = other.gameObject.GetComponent<IExplodable>();
         if (explodable != null)
         {
-            explodable.DealDamage(damage);
+            explodable.DealDamage(rate.damage);
             gameObject.SetActive(false);    // once hitted, should recycle myself
         }
     }

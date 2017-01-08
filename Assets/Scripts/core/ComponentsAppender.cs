@@ -8,10 +8,18 @@ using System;
 using UnityEngine.Assertions;
 
 public class ComponentAppender {
-	private const string JSON_PATH = "Assets/Data/json/";
+	public const string JSON_PATH = "Assets/Data/json/";
+
+	private static Mapping mapping;
+
+	public static void Initialize(string levelName)
+	{
+		if (mapping == null)
+			mapping = GetJson(levelName + ".json");
+	}
+
 	public static void Append (Scene level)
 	{
-		Mapping mapping = GetJson(level.name + ".json");
 		GameObject[] roots = level.GetRootGameObjects();
         for (int i = 0; i < roots.Length; i++)
         {
@@ -22,24 +30,33 @@ public class ComponentAppender {
 		}
 	}
 
+	public static void AppendOnPrefab(GameObject go)
+	{
+		var node = new Node(go.transform);
+		FindMappingAndAppend(node, mapping);
+	}
+
 	private static void RecursivelyAppend(Node node, Mapping data)
 	{
 		FindMappingAndAppend(node, data);
-		// for (int i = 0; i < node.children.Count; i++)
-		// {
-		// 	RecursivelyAppend(node.children[i] as Node, data);
-		// }
+		// Debug.Log(node.name);
+		if (node.children != null && node.children.Count > 0)
+		{
+			for (int i = 0; i < node.children.Count; i++)
+			{
+				var child = node.GetChildAt(i);
+				RecursivelyAppend(child, data);
+			}
+		}
 	}
 
 	private static void FindMappingAndAppend (Node node, Mapping data)
 	{
-		bool found = false;
 		for (int i = 0; i < data.mappings.Length; i++)
 		{
 			var m = data.mappings[i];
 			if (m.name == node.path)
 			{
-				found = true;
 				DoAppend(node, m.components);
 				break;
 			}
@@ -54,10 +71,6 @@ public class ComponentAppender {
 		{
 			string className = components[i].name;
 			Type type = Type.GetType(className);
-			// Type[] types = new Type[]{type};
-			// MethodInfo method = objType.GetMethod("AddComponent", types);
-			// method.MakeGenericMethod(type);
-			// var compIns = method.Invoke(gameObject, null);
 			var compIns = gameObject.AddComponent(type);
 			SetParameters(compIns, components[i].parameters);
 		}
@@ -65,6 +78,7 @@ public class ComponentAppender {
 
     private static void SetParameters(object compIns, KeyValue[] parameters)
     {
+		if (parameters == null || parameters.Length <= 0) return;
 		Type type = compIns.GetType();
 		for (int i = 0; i < parameters.Length; i++)
 		{
@@ -92,26 +106,26 @@ public class ComponentAppender {
 [Serializable]
 class MappingData
 {
-	public string name;
-	public ComponentData[] components;
+	public string name = "";
+	public ComponentData[] components = null;
 }
 
 [Serializable]
 class ComponentData
 {
-	public string name;
-	public KeyValue[] parameters;
+	public string name = "";
+	public KeyValue[] parameters = null;
 }
 
 [Serializable]
 class KeyValue
 {
-	public string name;
-	public object value;
+	public string name = "";
+	public string value = "";
 }
 
 [Serializable]
 class Mapping
 {
-	public MappingData[] mappings;
+	public MappingData[] mappings = null;
 }
