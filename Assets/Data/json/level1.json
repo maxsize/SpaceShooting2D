@@ -139,6 +139,14 @@
                     "name":"MyBullet"
                 }
             ]
+        },
+        {
+            "name":"ExplosionPrefab",
+            "components":[
+                {
+                    "name":"RecycleAnim"
+                }
+            ]
         }
     ]
 }

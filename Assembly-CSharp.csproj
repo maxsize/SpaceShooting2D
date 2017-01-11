@@ -78,15 +78,13 @@
      <Compile Include="Assets\Scripts\game\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\game\PlaneController.cs" />
      <Compile Include="Assets\Scripts\game\PulseBulletEmitter.cs" />
+     <Compile Include="Assets\Scripts\game\RecycleAnim.cs" />
      <Compile Include="Assets\Scripts\game\Scheduler.cs" />
      <Compile Include="Assets\Scripts\game\Spawner.cs" />
      <Compile Include="Assets\Scripts\game\TrackController.cs" />
      <Compile Include="Assets\Scripts\game\Waypoint.cs" />
      <Compile Include="Assets\Scripts\game\WaypointGizmos.cs" />
      <Compile Include="Assets\Scripts\node\Node.cs" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -101,9 +99,6 @@
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Purchasing">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>

@@ -23,7 +23,7 @@ public class Main : MonoBehaviour
         
         SceneManager.LoadScene("level1", LoadSceneMode.Additive);*/
         // StartCoroutine(BundleLoader.LoadBundle("http://localhost:8080/AssetBundles/AssetBundles"));
-        MultiLookUp.AddLookUp("http://localhost:8081/");
+        // MultiLookUp.AddLookUp("http://localhost:8081/");
         MultiLookUp.AddLookUp("http://localhost:8080/");
         Metadata.Initialize();
         AssetManager.Initialize(this);
@@ -56,13 +56,16 @@ public class Main : MonoBehaviour
         ComponentAppender.Initialize(level1.name);
         var MyBullet = bundle.LoadAsset("assets/prefabs/mybulletprefab.prefab") as GameObject;
         var PulseBullet = bundle.LoadAsset("assets/prefabs/pulsebulletprefab.prefab") as GameObject;
+        var Explotion = bundle.LoadAsset("assets/prefabs/explosionprefab.prefab") as GameObject;
         ComponentAppender.AppendOnPrefab(MyBullet);
         ComponentAppender.AppendOnPrefab(PulseBullet);
+        ComponentAppender.AppendOnPrefab(Explotion);
 
         Debug.Log("Asset loaded " + MyBullet);
-        GameObject[] pools = ObjectPool.current.prefabs;
-        ArrayUtils.Push(ref pools, MyBullet);
-        ArrayUtils.Push(ref pools, PulseBullet);
+        ObjectPool.current.AddSetting(PoolSettings.Create(MyBullet, 20, true));
+        ObjectPool.current.AddSetting(PoolSettings.Create(PulseBullet, 10, true));
+        ObjectPool.current.AddSetting(PoolSettings.Create(Explotion, 3, true));
+        ObjectPool.current.Initialize();    // pre cache
 
         ComponentAppender.Append(level1);
     }

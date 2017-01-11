@@ -46,8 +46,12 @@ public class Enemy : MonoBehaviour, IExplodable
     private void Explode()
     {
         // Instantiate(this, transform.position, Quaternion.identity);
-        var explode = ObjectPool.current.GetObject(explosion);
+        var pool = ObjectPool.current;
+        var explode = pool.GetObject(explosion);
+        explode.SetActive(true);
+        explode.transform.parent = transform.parent;
         explode.transform.position = transform.position;
+        Debug.Log(transform.position);
         explode.transform.rotation = Quaternion.identity;
     }
 }
