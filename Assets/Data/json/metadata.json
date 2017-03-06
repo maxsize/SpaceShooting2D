@@ -75,5 +75,19 @@
             "Y_Speed":9,
             "Max_Rotate":25
         }
+    ],
+    "backgrounds":[
+        {
+            "name":"level1",
+            "scrollSpeed":0.005,
+            "bgs":[
+                "bg_0",
+                "bg_1",
+                "bg_2",
+                "bg_0",
+                "bg_1",
+                "bg_2"
+            ]
+        }
     ]
 }

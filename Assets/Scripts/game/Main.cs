@@ -18,15 +18,10 @@ public class Main : MonoBehaviour
     /// </summary>
     void Start()
     {
-        /*AssetBundle.LoadFromFile("Assets/AssetBundles/sprites");
-        var bundle = AssetBundle.LoadFromFile("Assets/AssetBundles/level1");
-        
-        SceneManager.LoadScene("level1", LoadSceneMode.Additive);*/
-        // StartCoroutine(BundleLoader.LoadBundle("http://localhost:8080/AssetBundles/AssetBundles"));
-        // MultiLookUp.AddLookUp("http://localhost:8081/");
         MultiLookUp.AddLookUp("http://localhost:8080/");
         Metadata.Initialize();
         AssetManager.Initialize(this);
+        AssetRequestor.Initialize(this);
         var signal = AssetManager.LoadBundle("AssetBundles", "level1");
         signal.Add<object>(OnBundleLoaded);
     }
@@ -43,7 +38,6 @@ public class Main : MonoBehaviour
         //assets/prefabs/waypoint.prefab
 
         AssetBundle bundle = AssetManager.GetBundle("AssetBundles", "prefabs");
-        Debug.Log("Bundle loaded, requesting asset");
         
         StartCoroutine(LoadAndAppend(bundle));
     }
@@ -61,13 +55,15 @@ public class Main : MonoBehaviour
         ComponentAppender.AppendOnPrefab(PulseBullet);
         ComponentAppender.AppendOnPrefab(Explotion);
 
-        Debug.Log("Asset loaded " + MyBullet);
+        LogSys.logger.Debug("***************************Asset loaded " + MyBullet);
         ObjectPool.current.AddSetting(PoolSettings.Create(MyBullet, 20, true));
         ObjectPool.current.AddSetting(PoolSettings.Create(PulseBullet, 10, true));
         ObjectPool.current.AddSetting(PoolSettings.Create(Explotion, 3, true));
         ObjectPool.current.Initialize();    // pre cache
 
         ComponentAppender.Append(level1);
+
+        LoadBg();
     }
 
     private IEnumerator LoadScene()
@@ -83,5 +79,12 @@ public class Main : MonoBehaviour
         }
         Debug.Log("Scene loaded");
         yield break;
+    }
+
+    void LoadBg()
+    {
+        GameObject go = new GameObject();
+        var bg = go.AddComponent<Background>();
+        bg.backgroundName = "level1";
     }
 }

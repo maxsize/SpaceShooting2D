@@ -2,6 +2,7 @@ using System;
 using UnityEngine.Assertions;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Reflection;
 
 public class ArrayUtils
 {
@@ -59,7 +60,13 @@ public class ArrayUtils
             for (int i = 0; i < arr.Length; i++)
             {
                 var current = arr[i];
-                if (current.GetType().GetField(key).GetValue(current).ToString() == value)
+                FieldInfo field = current.GetType().GetField(key);
+                if (field != null && field.GetValue(current).ToString() == value)
+                {
+                    return current;
+                }
+                PropertyInfo property = current.GetType().GetProperty(key);
+                if (property != null && property.GetValue(current, null).ToString() == value)
                 {
                     return current;
                 }

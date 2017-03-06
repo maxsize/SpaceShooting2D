@@ -14,6 +14,9 @@ public class Metadata
     [SerializeField]
     public PlayerVO[] players;
 
+    [SerializeField]
+    public BackgroundVO[] backgrounds;
+
     public static Metadata Instance
     {
         get { return _instance; }

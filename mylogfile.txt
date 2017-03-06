@@ -1,0 +1,6 @@
+2017-03-02 23:27:54,740 [1] DEBUG LogSys - Asset loaded MyBulletPrefab (UnityEngine.GameObject)
+2017-03-03 15:49:35,783 [1] DEBUG LogSys - Asset loaded MyBulletPrefab (UnityEngine.GameObject)
+2017-03-03 15:52:25,465 [1] DEBUG LogSys - Asset loaded MyBulletPrefab (UnityEngine.GameObject)
+2017-03-03 15:54:38,208 [1] DEBUG LogSys - Asset loaded MyBulletPrefab (UnityEngine.GameObject)
+2017-03-03 15:55:30,758 [1] DEBUG LogSys - ***************************Asset loaded MyBulletPrefab (UnityEngine.GameObject)
+2017-03-03 15:56:04,124 [1] DEBUG LogSys - ***************************Asset loaded MyBulletPrefab (UnityEngine.GameObject)
