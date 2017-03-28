@@ -58,6 +58,7 @@
      <Compile Include="Assets\Data\PlayerVO.cs" />
      <Compile Include="Assets\Data\PulseEmitterVO.cs" />
      <Compile Include="Assets\Data\SimpleEnemyData.cs" />
+     <Compile Include="Assets\Scripts\StringUtils.cs" />
      <Compile Include="Assets\Scripts\core\ArrayUtils.cs" />
      <Compile Include="Assets\Scripts\core\AssemblyUtils.cs" />
      <Compile Include="Assets\Scripts\core\AssetManager.cs" />
@@ -88,13 +89,7 @@
      <Compile Include="Assets\Scripts\game\TrackController.cs" />
      <Compile Include="Assets\Scripts\game\Waypoint.cs" />
      <Compile Include="Assets\Scripts\game\WaypointGizmos.cs" />
-     <Compile Include="Assets\Scripts\logging\LogSys.cs" />
-     <Compile Include="Assets\Scripts\logging\UnityAppender.cs" />
      <Compile Include="Assets\Scripts\node\Node.cs" />
-     <None Include="Assets\Plugins\log4net\log4net.xml" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -110,14 +105,8 @@
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
  </Reference>
- <Reference Include="UnityEngine.Purchasing">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
- </Reference>
- <Reference Include="log4net">
- <HintPath>C:/Users/Max/Documents/UnityProjects/SpaceShooting2D/Assets/Plugins/log4net/log4net.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

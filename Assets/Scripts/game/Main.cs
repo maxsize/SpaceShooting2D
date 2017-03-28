@@ -55,7 +55,6 @@ public class Main : MonoBehaviour
         ComponentAppender.AppendOnPrefab(PulseBullet);
         ComponentAppender.AppendOnPrefab(Explotion);
 
-        LogSys.logger.Debug("***************************Asset loaded " + MyBullet);
         ObjectPool.current.AddSetting(PoolSettings.Create(MyBullet, 20, true));
         ObjectPool.current.AddSetting(PoolSettings.Create(PulseBullet, 10, true));
         ObjectPool.current.AddSetting(PoolSettings.Create(Explotion, 3, true));
