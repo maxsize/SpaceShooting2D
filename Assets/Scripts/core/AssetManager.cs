@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System;
+using UnityEngine.Events;
 
 public class AssetManager
 {
@@ -21,12 +22,12 @@ public class AssetManager
     ///</summary>
     private static void InitUri(string rootUri)
     {
-        ManifestLoader loader = new ManifestLoader(typeof(AssetBundle));
+        ManifestLoader loader = new ManifestLoader();
         loader.Initialize(rootUri);
         manifestMap.Add(rootUri, loader);
     }
 
-    public static Signal LoadBundle(string root, string bundleName)
+    public static ManifestLoader LoadBundle(string root, string bundleName)
     {
         ManifestLoader loader;
         manifestMap.TryGetValue(root, out loader);
@@ -52,10 +53,10 @@ public class AssetManager
     }
 }
 
-class ManifestLoader : Signal
+public class ManifestLoader
 {
-    // public static string ASSET_LOADED = "assetLoaded";
-    // public static string BUNDLE_LOADED = "bundleLoaded";
+    public ManifestLoaderEvent<AssetBundle> OnSuccess;
+    public ManifestLoaderEvent<Exception> OnFail;
 
     private const string MAIN_BUNDLE_NAME = "AssetBundles";
     private AssetBundleManifest _manifestIns;
@@ -63,8 +64,10 @@ class ManifestLoader : Signal
     private Dictionary<string, AssetBundle> bundleMap;
     private bool initialized = false;
 
-    public ManifestLoader(Type ParamType) : base(ParamType)
+    public ManifestLoader()
     {
+        OnSuccess = new ManifestLoaderEvent<AssetBundle>();
+        OnFail = new ManifestLoaderEvent<Exception>();
     }
 
     public AssetBundleManifest manifest
@@ -130,11 +133,11 @@ class ManifestLoader : Signal
     {
         yield return mono.StartCoroutine(WaitForInitialization());
         // load the target bundle and will not throw event unless all dependencies are all loaded
-        yield return mono.StartCoroutine(LoadBundleOnly(bundleName, false));
+        yield return mono.StartCoroutine(LoadBundleOnly(bundleName));
         yield return mono.StartCoroutine(LoadDependencies(bundleName));
         AssetBundle bundle;
         bundleMap.TryGetValue(bundleName, out bundle);
-        throwEvent(bundle);
+        OnSuccess.Invoke(bundle);
         yield break;
     }
 
@@ -153,14 +156,14 @@ class ManifestLoader : Signal
         while (deps.Length > 0)
         {
             var dep = ArrayUtils.RemoveAt(ref deps, 0);
-            yield return mono.StartCoroutine(LoadBundleOnly(dep, false));
+            yield return mono.StartCoroutine(LoadBundleOnly(dep));
         }
         yield break;
     }
 
     private IEnumerator LoadManifest()
     {
-        yield return mono.StartCoroutine(LoadBundleOnly(MAIN_BUNDLE_NAME, false));
+        yield return mono.StartCoroutine(LoadBundleOnly(MAIN_BUNDLE_NAME));
         AssetBundle bundle = bundleMap[MAIN_BUNDLE_NAME];
         AssetBundleRequest request = bundle.LoadAssetAsync<AssetBundleManifest>("AssetBundleManifest");
         yield return request;
@@ -177,7 +180,7 @@ class ManifestLoader : Signal
         yield break;
     }
 
-    private IEnumerator LoadBundleOnly(string bundleName, bool throwEventAfterLoad = true)
+    private IEnumerator LoadBundleOnly(string bundleName)
     {
         AssetBundle bundle;
         bundleMap.TryGetValue(bundleName, out bundle);
@@ -185,7 +188,6 @@ class ManifestLoader : Signal
         {
             // if bundle already loaded, end coroutine after 1 frame.
             yield return null;
-            if (throwEventAfterLoad) throwEvent(bundleMap[bundleName]);
             yield break;
         }
 
@@ -203,7 +205,7 @@ class ManifestLoader : Signal
                 bool hasNext = lu.Next();      // try next lookup
                 if (!hasNext)
                 {
-                    throwEvent(null);
+                    OnFail.Invoke(new Exception($"Fail to load bundle {bundleName}"));
                     yield break;    // exit coroutine
                 }
             }
@@ -213,18 +215,12 @@ class ManifestLoader : Signal
                 bundle = handler.assetBundle;
                 bundleMap.Add(bundleName, bundle);
                 www.Dispose();
-                if (throwEventAfterLoad) throwEvent(bundleMap[bundleName]);
                 Debug.Log("Bundle " + bundleName + " loaded.");
                 yield break;
             }
         }
 
-        throwEvent(null);
+        OnFail.Invoke(new Exception($"Fail to load bundle {bundleName}"));
         yield break;
-    }
-
-    private void throwEvent(object data)
-    {
-        dispatch<object>(data);
     }
 }

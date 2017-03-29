@@ -22,8 +22,8 @@ public class Main : MonoBehaviour
         Metadata.Initialize();
         AssetManager.Initialize(this);
         AssetRequestor.Initialize(this);
-        var signal = AssetManager.LoadBundle("AssetBundles", "level1");
-        signal.Add<object>(OnBundleLoaded);
+        var loader = AssetManager.LoadBundle("AssetBundles", "level1");
+        loader.OnSuccess.AddListener(OnBundleLoaded);
     }
 
     void OnBundleLoaded(object value)
